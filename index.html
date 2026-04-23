@@ -319,6 +319,52 @@ body::after{
 ::-webkit-scrollbar-track{background:#050508;}
 ::-webkit-scrollbar-thumb{background:#1e2040;border-radius:2px;}
 @media(max-width:600px){#side-panel{width:150px;flex:0 0 150px;}}
+/* --- МОБИЛЬНЫЕ СТИЛИ --- */
+@media (max-width: 600px) {
+
+  #intro {
+    padding: 20px;
+    text-align: center;
+  }
+
+  #intro h1 {
+    font-size: 1.4em;
+  }
+
+  canvas {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+
+  /* Картинки меньше и не мешают */
+  #intro-img-left {
+    width: 100px !important;
+    left: 5px !important;
+    opacity: 0.4 !important;
+  }
+
+  #intro-img-right {
+    width: 100px !important;
+    right: 5px !important;
+    opacity: 0.4 !important;
+  }
+
+  /* Контент поверх картинок */
+  #intro-content {
+    position: relative;
+    z-index: 10;
+  }
+
+  /* Кнопка старта всегда кликабельна */
+  #intro-btn {
+    position: relative;
+    z-index: 99 !important;
+    margin-top: 20px;
+    padding: 15px 40px;
+    font-size: 1.2em;
+  }
+}
+
 </style>
 </head>
 <body>
