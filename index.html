@@ -2014,20 +2014,17 @@ const DEFAULT_SOUNDS = {
   'infected': 'sounds/Recording (1).mp3',
 };
 function preloadDefaultSounds(){
-  for(const key in DEFAULT_SOUNDS){
-    try{
-      const a = new Audio(DEFAULT_SOUNDS[key]);
-      a.volume = 0;
-      a.play().then(()=>a.pause()).catch(()=>{});
-    }catch(e){}
+  const ctx = getACtx();
+  if(ctx && ctx.state === 'suspended'){
+    ctx.resume().catch(()=>{});
   }
 }
 
-// Вызываем при первом клике пользователя
 document.addEventListener('click', function unlockAudio(){
   preloadDefaultSounds();
   document.removeEventListener('click', unlockAudio);
 }, {once: true});
+
 
 function loadSound(key, input){
   if(!input.files || !input.files[0]) return;
@@ -2218,6 +2215,7 @@ Object.assign(G,{
     G.chickens.push(mkChicken('normal'));
     G.chickens.push(mkChicken('normal'));
     G.chickens.push(mkChicken('normal'));
+	loadSavedSounds();
 
 
     log('🐔 Farm started! Click chickens to feed/collect.', 'g');
