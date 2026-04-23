@@ -327,32 +327,33 @@ body::after{
 <div id="intro">
   <div id="intro-noise"></div>
   <canvas id="intro-silhouette" width="220" height="280"></canvas>
-  <!-- Твои картинки на интро -->
-	<!-- Левая картинка -->
-	<img id="intro-img-left" src="Image.png" style="
-	  position:absolute;
-	  bottom:0;
-	  left:40px;
-	  width:180px;
-	  height:auto;
-	  opacity:0;
-	  transition:opacity 2s ease;
-	  filter:drop-shadow(0 0 15px rgba(57,255,20,0.4));
-	  z-index:2;
-	">
+<!-- Левая картинка -->
+<img id="intro-img-left" src="Image.png" style="
+  position:absolute;
+  bottom:0;
+  left:40px;
+  width:180px;
+  height:auto;
+  opacity:0;
+  transition:opacity 2s ease;
+  filter:drop-shadow(0 0 15px rgba(57,255,20,0.4));
+  z-index:1;
+  pointer-events:none;
+">
 
-	<!-- Правая картинка -->
-	<img id="intro-img-right" src="Image_.png" style="
-	  position:absolute;
-	  bottom:0;
-	  right:40px;
-	  width:180px;
-	  height:auto;
-	  opacity:0;
-	  transition:opacity 2s ease;
-	  filter:drop-shadow(0 0 15px rgba(255,51,85,0.4));
-	  z-index:2;
-	">
+<!-- Правая картинка -->
+<img id="intro-img-right" src="Image_.png" style="
+  position:absolute;
+  bottom:0;
+  right:40px;
+  width:180px;
+  height:auto;
+  opacity:0;
+  transition:opacity 2s ease;
+  filter:drop-shadow(0 0 15px rgba(255,51,85,0.4));
+  z-index:1;
+  pointer-events:none;
+">
 
 <div id="intro-content">
   <div id="intro-tag">CLASSIFIED SIMULATION v1.9.9</div>
@@ -1932,6 +1933,15 @@ const _audios = {};
 let _memeAudioPlaying = false; // ← флаг что звук уже играет
 
 const DEFAULT_SOUNDS = {
+  'zombie'  : 'sounds/Recording.mp3',
+  'meme1'   : 'sounds/dch.mp3',
+  'meme2'   : 'sounds/indeec.mp3',
+  'meme3'   : 'sounds/yaz.mp3',
+  'cluck'   : 'sounds/cluck.mp3',
+  'collect' : 'sounds/collect.mp3',
+  'gameover': 'sounds/go.mp3',
+  'mutate'  : 'sounds/Recording (2).mp3',
+  'infected': 'sounds/Recording (1).mp3',
 };
 function preloadDefaultSounds(){
   for(const key in DEFAULT_SOUNDS){
@@ -1977,14 +1987,15 @@ function loadSavedSounds(){
                  'cluck','infected','meme1','meme2','meme3'];
   let loaded = 0;
   for(const key of keys){
+    // Сначала проверяем localStorage
     const saved = localStorage.getItem('sound_' + key);
     if(saved){
       _audios[key] = saved;
-      loaded++;
     }
-  }
-  if(loaded > 0){
-    log(`🔊 Loaded ${loaded} saved sounds`, 'g');
+    // Если нет — берём из папки sounds/
+    else if(DEFAULT_SOUNDS[key]){
+      _audios[key] = DEFAULT_SOUNDS[key];
+    }
   }
 }
 
